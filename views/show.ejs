@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Show Page</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="public/show.css">
+
+</head>
+<body>
+    
+	 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Yelpcamp</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a href="/campg" class="nav-link">
+        Home
+      </a>
+    </li>
+    
+  </ul>
+  <ul class="navbar-nav ml-auto">
+    <% if(!user){%>
+        <li class="nav-item">
+      <a class="nav-link" href="/login">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/register">Signup</a>
+    </li>
+
+    <% } else { %>
+        <li class="nav-item">
+        	<a href="/profile" class="nav-link">Signed in as <%= user.username %></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+    <% } %>
+  </ul>
+    
+  </div>
+</nav>
+<br>
+
+
+<div class="container" >
+  <%if(message2 && message2.length>0){%>
+  <div class="alert alert-success alert-dismissible fade show" id="land"><%=message2%><button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="myfunc()">
+    <span aria-hidden="true">&times;</span>
+  </button></div>
+  <%}%>
+  
+</div>
+
+
+<div class="container">
+	<div class="row">
+    	<div class="col-md-3">
+    		<p class="lead"><h3>YelpCamp</h3></p>
+    		<ul class="list-group">
+               <li class="list-group-item active">Info-1
+               </li>
+               <li class="list-group-item">Info-2</li>
+               <li class="list-group-item">Info-3</li>
+            </ul>
+    	</div>
+    	<div class="col-md-9">
+    	<div class="card">
+    		<img src="<%= camp.image %>" class="card-img-top img-responsive">
+    		<div class="card-body">
+    			<h5 class="float-md-right">$<%=camp.price%>/Night</h5>
+    			<a href="#"><h3 class="card-title"><%= camp.name %></h3></a>
+
+	            <p class="card-text">
+		           <%= camp.description %>
+	            </p>
+              <p>
+                <em>Submited By: <%=camp.author.username%><span class="float-md-right"><%= moment(camp.createdAt).fromNow() %></span></em>
+              </p>
+          <% if(user && camp.author.id.equals(user.id)|| user&& user.isadmin ===true){ %>
+             <a href="/campg/yid/<%= camp.id %>/edit" class="btn btn-success">Update</a>
+             <form action="/campg/yid/<%=camp.id%>?_method=DELETE" method="POST" style="display: inline;">
+                <button class="btn btn-danger">
+                  Delete   
+                </button>
+             </form>
+        <% } %>
+
+    		</div>
+
+    	</div>
+    	<br>
+    	<div class="alert alert-dark"> 
+    		<h5 class="alert-heading text-right"><a href="/campg/yid/<%=camp.id%>/comments/new" class="btn btn-success">Add New Comment</a></h5>  
+    		<hr>
+    		<% camp.comments.forEach(function(x){ %>
+            <div class="row">
+            	<div class="col-md-12">
+                    <span class="float-md-right"><%= moment(x.createdAt).fromNow() %></span>
+            		<strong><%= x.author %></strong>
+            		<p><%= x.text %></p>
+                <%if(user && x.author == user.username){%>
+                <a href="/campg/yid/<%=camp.id%>/comments/<%=x.id%>/edit" class="btn btn-warning btn-xs">Edit</a>
+                <form action="/campg/yid/<%=camp.id%>/comments/<%=x.id%>?_method=DELETE" method="POST" style="display: inline;">
+                <button class="btn btn-danger">
+                  Delete   
+                </button>
+             </form>
+             <%};%>
+            		<% }); %>
+            	</div>
+            </div>
+    	</div>
+    </div>
+    </div> 
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+  function myfunc(){
+    $("#land").fadeOut("slow",function(){});
+  }
+  </script>      
+</body>
+</html>

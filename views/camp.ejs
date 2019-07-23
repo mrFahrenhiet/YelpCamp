@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Campsites</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="camp.css">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Yelpcamp</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a href="/campg" class="nav-link">
+        Home
+      </a>
+    </li>
+    
+  </ul>
+  <ul class="navbar-nav ml-auto">
+    <% if(!user){%>
+        <li class="nav-item">
+      <a class="nav-link" href="/login">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/register">Signup</a>
+    </li>
+
+    <% } else { %>
+        <li class="nav-item">
+        	<a href="/profile" class="nav-link">Signed in as <%= user.username %></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+    <% } %>
+  </ul>
+    
+  </div>
+</nav>
+<br>
+<%if(message2 && message2.length>0){%>
+<div class="container"><div class="alert alert-success alert-dismissible fade show" id="land" role="alert">
+  <%=message2%>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="myfunc()">
+    <span aria-hidden="true">&times;</span>
+  </button></div>
+</div>
+<%}%>
+	<div class="container mt-2">
+		<header class="jumbotron">
+			<div class="container">
+				<h1>All Campsites</h1>
+				<h5>Some of our best campgrounds...</h5>
+			    <br>
+			    <p>
+		            <a href="/campg/new" class="btn btn-lg btn-primary">Add New Campgrounds</a>
+	            </p>
+				
+			</div>
+			
+		</header>
+		
+	    <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+	        <% data.forEach(function(x){ %>
+	            <div class="col-md-3 col-sm-6">
+	            	<div class="card mb-3">
+	            		<img src="<%= x.image %>" class="card-img-top">
+	            		<div class="card-body">
+	            			<h4 class="card-title"><%= x.name %></h4>
+	            			<a href="/campg/yid/<%= x.id %>" class="btn btn-primary">More Info</a>
+	            		</div>
+	            	</div>
+
+	            	
+	            	
+	            </div>  
+		    <% }); %>
+	    </div>
+	    
+	    
+	</div>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+  function myfunc(){
+    $("#land").fadeOut("slow",function(){});
+  }
+</script>
+
+</body>
+</html>

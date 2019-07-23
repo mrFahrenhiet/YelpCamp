@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="form.css">
+</head>
+<body>
+	   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Yelpcamp</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a href="/campg" class="nav-link">
+        Home
+      </a>
+    </li>
+    
+  </ul>
+  <ul class="navbar-nav ml-auto">
+    <% if(!user){%>
+        <li class="nav-item">
+      <a class="nav-link" href="/login">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/register">Signup</a>
+    </li>
+
+    <% } else { %>
+        <li class="nav-item">
+        	<a href="/profile" class="nav-link">Signed in as <%= user.username %></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+    <% } %>
+  </ul>
+    
+  </div>
+</nav>
+    <div class="container mt-2">
+    	<div>
+    	<h1 style="text-align: center;">Create a new Campground:</h1>
+	        <form action="/campg" method="POST" style="width: 30%; margin: 25px auto;">
+		    <p>Campsite <input class="form-control" type="text" name="campsite"></p>
+		    <p>Price <input class="form-control" type="number" name="price"></p>
+		    <p>Image URL <input class="form-control" type="text" name="imgurl"></p>
+        <p>Description <input class="form-control" type="text" name="des"></p>
+		    <br>
+		    <button class="btn btn-lg btn-primary btn-block">Submit</button>
+	        </form>
+            </div>
+    </div>
+
+
+</body>
+</html>
